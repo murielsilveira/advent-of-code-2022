@@ -22,5 +22,8 @@ pub fn solve() {
     let top_three_calories_sum = &elves[elves.len() - 3..].iter().sum::<u32>();
 
     println!("[day01.p1] top one calories {:?}", top_one_calories);
-    println!("[day01.p2] top three calories sum {:?}", top_three_calories_sum);
+    println!(
+        "[day01.p2] top three calories sum {:?}",
+        top_three_calories_sum
+    );
 }
