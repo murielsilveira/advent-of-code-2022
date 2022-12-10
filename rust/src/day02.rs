@@ -5,7 +5,7 @@ pub fn solve() {
 
     let rounds: Vec<_> = content
         .trim()
-        .split('\n')
+        .lines()
         .map(|line| {
             let round: Vec<_> = line.split(' ').collect();
             (round[0], round[1])
