@@ -1,7 +1,7 @@
 use std::fs;
 
 fn main() {
-    let content = fs::read_to_string("../../_inputs/day01.txt").unwrap();
+    let content = fs::read_to_string("../_inputs/day01.txt").unwrap();
 
     let mut elves = content
         .trim()
