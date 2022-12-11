@@ -13,16 +13,25 @@ pub fn solve() {
         .map(|(index, letter)| (letter, index + 1))
         .collect();
 
-    let priorities_sum = content
+    let ruckstacks: Vec<_> = content
         .trim()
         .lines()
-        .map(|items| {
-            let size = items.len();
-
-            if size % 2 != 0 {
+        .map(|line| {
+            if line.len() % 2 != 0 {
                 panic!("invalid rucksack content, items should be even");
             }
+            line
+        })
+        .collect();
 
+    if ruckstacks.len() % 3 != 0 {
+        panic!("invalid rucksacks, should be able to form groups of 3");
+    }
+
+    let priorities_sum = ruckstacks
+        .iter()
+        .map(|items| {
+            let size = items.len();
             let (compartment_one, compartment_two) = items.split_at(size / 2);
 
             let compartment_one: HashSet<_> = compartment_one.chars().collect();
@@ -41,5 +50,26 @@ pub fn solve() {
         .iter()
         .sum::<usize>();
 
+    let group_priorities_sum = ruckstacks
+        .chunks_exact(3)
+        .map(|group| {
+            let one: HashSet<_> = group[0].chars().collect();
+            let two: HashSet<_> = group[1].chars().collect();
+            let three: HashSet<_> = group[2].chars().collect();
+
+            let common_item = one
+                .into_iter()
+                .filter(|item| two.contains(item) && three.contains(item))
+                .collect::<Vec<_>>()[0];
+
+            *priorities
+                .get(&common_item)
+                .unwrap_or_else(|| panic!("invalid item {}", common_item))
+        })
+        .collect::<Vec<_>>()
+        .iter()
+        .sum::<usize>();
+
     println!("[day03.p1] priorities sum: {}", priorities_sum);
+    println!("[day03.p2] group priorities sum: {}", group_priorities_sum);
 }
